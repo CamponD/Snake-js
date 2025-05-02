@@ -1,0 +1,7 @@
+.game {
+    width: 75%;
+    max-width: 800px;
+    height: auto;
+    max-height: calc(100vh - 250px);
+    background-color: #c8f0c3;
+  }

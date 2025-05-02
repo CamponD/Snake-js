@@ -1,0 +1,21 @@
+body {
+  background-image: url('/fondo_snake.png');
+  background-repeat: repeat;
+  background-size: 50% auto;
+  background-position: top center;
+  background-color: #c8f0c3;
+  text-align: center;
+}
+
+.title-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+
+}
+.title-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

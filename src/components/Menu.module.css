@@ -1,0 +1,16 @@
+.menuContainer {
+    background-color: aquamarine;
+    width: 75%;
+    max-width: 800px;
+    height: auto;
+    max-height: calc(100vh - 250px);
+    margin: auto;
+}
+
+.titulo {
+    font-size: 3rem;
+    color: #3c8c3c;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
