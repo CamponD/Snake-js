@@ -1,11 +1,17 @@
 import styles from './Menu.module.css';
+import Border from './Border';
 
-function Menu() {
+function Menu({ start }) {
   return (
-    <div className={styles.menuContainer}>
-      <h1 className={styles.titulo}>Snake Game</h1>
-      <button>Jugar</button>
-    </div>
+    <Border>
+      <div className={styles.menuContainer}>
+        <h1 className={styles.titulo}>Snake Game</h1>
+        <button className={styles.button} onClick={start} >Jugar</button>
+        <button className={styles.button} onClick={start} >Jugar</button>
+        <button className={styles.button} onClick={start} >Jugar</button>
+        <button className={styles.button} onClick={start} >Jugar</button>
+      </div>
+    </Border>
   );
 }
 
