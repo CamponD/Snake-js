@@ -10,12 +10,13 @@ body {
 .title-container {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: 450px;
   margin: auto;
 
 }
 .title-container img {
   width: 100%;
   height: auto;
+  max-height: 125px;
   display: block;
 }
