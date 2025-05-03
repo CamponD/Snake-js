@@ -6,9 +6,11 @@ function Border({ children }) {
     return (
         <div className={styles.wrapper}>
             <div className={styles.content}>
-                {children}
+                <div className={styles.inner}>
+                    {children}
+                </div>
             </div>
-            <img src={borderImg} alt="Marco decorativo" className={styles.frame} />
+            <img src={borderImg} alt="Decorative border" className={styles.frame} />
         </div>
     )
 }
