@@ -1,6 +1,9 @@
-import { useEffect, useRef } from 'react'
-import styles from './GameCanvas.module.css'
-import Border from './Border'
+import { useEffect, useRef } from "react"
+import styles from "./GameCanvas.module.css"
+import Border from "./Border"
+
+import Snake from "../classes/Snake.js"
+import { drawSnake } from '../utils/canvasHelpers';
 
 
 function GameCanvas() {
@@ -8,33 +11,56 @@ function GameCanvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current
+    const cellSize = 20
+
     if (canvas.getContext) {
       var ctx = canvas.getContext("2d")
-    }
-    const cellSize = 20;
-    const cols = canvas.width / cellSize;
-    const rows = canvas.height / cellSize;
 
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.lineWidth = 1;
+      let initialBody = [
+        { x: 10, y: 15 },
+        { x: 9, y: 15 },
+        { x: 8, y: 15 }
+      ]
+      let currentDirection = { x: 1, y: 0 }
+      let lastTime = 0
+      let countStep = 0
+      const speed = 600
 
-    // Dibujar líneas verticales
-    for (let x = 0; x <= cols; x++) {
-      ctx.beginPath();
-      ctx.moveTo(x * cellSize, 0);
-      ctx.lineTo(x * cellSize, canvas.height);
-      ctx.stroke();
-    }
 
-    // Dibujar líneas horizontales
-    for (let y = 0; y <= rows; y++) {
-      ctx.beginPath();
-      ctx.moveTo(0, y * cellSize);
-      ctx.lineTo(canvas.width, y * cellSize);
-      ctx.stroke();
+      window.addEventListener('keydown', (e) => {
+        const key = e.key.toLocaleLowerCase()
+        if (key == "a" && !(currentDirection.x == 1 && currentDirection.y == 0))
+          currentDirection = { x: -1, y: 0 }
+        if (key == "w" && !(currentDirection.x == 0 && currentDirection.y == 1))
+          currentDirection = { x: 0, y: -1 }
+        if (key == "d" && !(currentDirection.x == -1 && currentDirection.y == 0))
+          currentDirection = { x: 1, y: 0 }
+        if (key == "s" && !(currentDirection.x == 0 && currentDirection.y == -1 ))
+          currentDirection = { x: 0, y: 1 }
+      })
+      
+      const snake = new Snake(initialBody, { width: cellSize, height: cellSize }, "#4CAF50", 7)
+      
+      // timestamp -- Argumento que se pasa automáticamente a gameLoop (Tiempo actual 'ms' desde que la página empezo a cargarse.)
+      const gameLoop = (timestamp) => {      
+        if (timestamp - lastTime > speed) {
+          snake.update(currentDirection)         
+          if (countStep % 3 == 0)
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+          
+          drawSnake(ctx, cellSize, snake)
+          lastTime = timestamp
+        }
+
+        requestAnimationFrame(gameLoop)    
+      }  
+       
+      gameLoop()
     }
 
   }, [])
+
+  
 
   return (
     <Border>
@@ -45,7 +71,7 @@ function GameCanvas() {
         height={600}
       />
     </Border>
-  );
+  )
 }
 
 export default GameCanvas
