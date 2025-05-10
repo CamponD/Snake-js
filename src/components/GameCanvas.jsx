@@ -3,12 +3,10 @@ import styles from "./GameCanvas.module.css"
 import Border from "./Border"
 
 import Snake from "../classes/Snake.js"
-import { drawSnake } from '../utils/canvasHelpers';
-
+import Food from "../classes/Food.js"
 
 function GameCanvas() {
   const canvasRef = useRef(null)
-
   useEffect(() => {
     const canvas = canvasRef.current
     const cellSize = 20
@@ -21,40 +19,44 @@ function GameCanvas() {
         { x: 9, y: 15 },
         { x: 8, y: 15 }
       ]
+      
       let currentDirection = { x: 1, y: 0 }
+      let nextDirection = currentDirection
       let lastTime = 0
       let countStep = 0
-      const speed = 600
+      const speed = 150
 
-
+      const snake = new Snake(initialBody, { width: cellSize, height: cellSize }, "#4CAF50")
+      const food = new Food(canvas, { width: cellSize, height: cellSize })
+      
       window.addEventListener('keydown', (e) => {
-        const key = e.key.toLocaleLowerCase()
-        if (key == "a" && !(currentDirection.x == 1 && currentDirection.y == 0))
-          currentDirection = { x: -1, y: 0 }
-        if (key == "w" && !(currentDirection.x == 0 && currentDirection.y == 1))
-          currentDirection = { x: 0, y: -1 }
-        if (key == "d" && !(currentDirection.x == -1 && currentDirection.y == 0))
-          currentDirection = { x: 1, y: 0 }
-        if (key == "s" && !(currentDirection.x == 0 && currentDirection.y == -1 ))
-          currentDirection = { x: 0, y: 1 }
-      })
-      
-      const snake = new Snake(initialBody, { width: cellSize, height: cellSize }, "#4CAF50", 7)
-      
+        const key = e.key.toLowerCase();
+        if (key === "a" && !(currentDirection.x === 1 && currentDirection.y === 0))
+          nextDirection = { x: -1, y: 0 }
+      if (key === "w" && !(currentDirection.x === 0 && currentDirection.y === 1))
+          nextDirection = { x: 0, y: -1 }
+      if (key === "d" && !(currentDirection.x === -1 && currentDirection.y === 0))
+          nextDirection = { x: 1, y: 0 }
+      if (key === "s" && !(currentDirection.x === 0 && currentDirection.y === -1))
+          nextDirection = { x: 0, y: 1 }
+    })
+
       // timestamp -- Argumento que se pasa automáticamente a gameLoop (Tiempo actual 'ms' desde que la página empezo a cargarse.)
       const gameLoop = (timestamp) => {      
         if (timestamp - lastTime > speed) {
-          snake.update(currentDirection)         
+          snake.update(canvas, nextDirection)    
+          currentDirection = nextDirection
           if (countStep % 3 == 0)
             ctx.clearRect(0, 0, canvas.width, canvas.height)
           
-          drawSnake(ctx, cellSize, snake)
+          food.draw(ctx)
+          snake.draw(ctx)
           lastTime = timestamp
         }
 
         requestAnimationFrame(gameLoop)    
       }  
-       
+
       gameLoop()
     }
 

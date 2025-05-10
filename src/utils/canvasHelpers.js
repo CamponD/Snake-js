@@ -22,6 +22,6 @@ export function drawGrid(ctx, cellSize, canvas) {
     }
   }
 
-  export function drawSnake(ctx, cellSize, snake) {
-    snake.draw(ctx, cellSize)
-  }
+export function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min
+}
