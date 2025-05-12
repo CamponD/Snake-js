@@ -3,9 +3,10 @@ class Snake {
     this.body = initialBody
     this.size = size
     this.color = color
+    this.eatFood = false
   }
 
-  update(canvas, direction) {
+  update(canvas, direction, foodPosition) {
     const newHead = {
       x: this.body[0].x + direction.x,
       y: this.body[0].y + direction.y
@@ -13,13 +14,18 @@ class Snake {
     const cols = canvas.width / this.size.width
     const rows = canvas.height / this.size.height
 
-    if (this.body[0].x < 0 || this.body[0].x >= cols) return
-    if (this.body[0].y < 0 || this.body[0].y >= rows) return
+    if (newHead.x < 0 || newHead.x >= cols) return
+    if (newHead.y < 0 || newHead.y >= rows) return
 
     // 2. Añadir al principio
     this.body.unshift(newHead)
-    // 3. Quitar la última parte (cola)
-    this.body.pop()
+
+    if (newHead.x == foodPosition.x && newHead.y == foodPosition.y){
+      this.eatFood = true
+    }else{
+      // 3. Quitar la última parte (cola)
+      this.body.pop()
+    }    
   }
 
   draw(ctx) {

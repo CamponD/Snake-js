@@ -12,6 +12,7 @@ class Food {
         
         this.randomX = getRandomInt(0, cols) * this.size.width
         this.randomY = getRandomInt(0, rows) * this.size.height
+        return ({ x: this.randomX / this.size.width, y: this.randomY / this.size.height})
     }
 
     draw(ctx) {

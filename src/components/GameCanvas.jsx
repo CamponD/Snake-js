@@ -23,12 +23,14 @@ function GameCanvas() {
       let currentDirection = { x: 1, y: 0 }
       let nextDirection = currentDirection
       let lastTime = 0
-      let countStep = 0
-      const speed = 150
+      const speed = 200
+      
+      let food = new Food(canvas, { width: cellSize, height: cellSize })
+      let foodPosition = food.setRandomPosition()
 
       const snake = new Snake(initialBody, { width: cellSize, height: cellSize }, "#4CAF50")
-      const food = new Food(canvas, { width: cellSize, height: cellSize })
       
+
       window.addEventListener('keydown', (e) => {
         const key = e.key.toLowerCase();
         if (key === "a" && !(currentDirection.x === 1 && currentDirection.y === 0))
@@ -44,13 +46,20 @@ function GameCanvas() {
       // timestamp -- Argumento que se pasa automáticamente a gameLoop (Tiempo actual 'ms' desde que la página empezo a cargarse.)
       const gameLoop = (timestamp) => {      
         if (timestamp - lastTime > speed) {
-          snake.update(canvas, nextDirection)    
+          snake.update(canvas, nextDirection, foodPosition)
+
+          if(snake.eatFood){
+            food = new Food(canvas, { width: cellSize, height: cellSize })
+            foodPosition = food.setRandomPosition()
+            snake.eatFood = false
+          }
+
           currentDirection = nextDirection
-          if (countStep % 3 == 0)
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
-          
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height) 
           food.draw(ctx)
           snake.draw(ctx)
+
           lastTime = timestamp
         }
 
