@@ -23,6 +23,7 @@ function GameCanvas() {
       let currentDirection = { x: 1, y: 0 }
       let nextDirection = currentDirection
       let lastTime = 0
+      let count = 0
       const speed = 200
       
       let food = new Food(canvas, { width: cellSize, height: cellSize })
@@ -51,7 +52,9 @@ function GameCanvas() {
           if(snake.eatFood){
             food = new Food(canvas, { width: cellSize, height: cellSize })
             foodPosition = food.setRandomPosition()
-            snake.eatFood = false
+            count += 1
+            console.log(count)            
+            snake.eatFood = false            
           }
 
           currentDirection = nextDirection
@@ -69,9 +72,7 @@ function GameCanvas() {
       gameLoop()
     }
 
-  }, [])
-
-  
+  }, [])  
 
   return (
     <Border>

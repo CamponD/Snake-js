@@ -17,6 +17,11 @@ class Snake {
     if (newHead.x < 0 || newHead.x >= cols) return
     if (newHead.y < 0 || newHead.y >= rows) return
 
+    this.body.forEach(segment => {
+      if(segment.x == newHead.x && segment.y == newHead.y)
+        return
+    })
+
     // 2. Añadir al principio
     this.body.unshift(newHead)
 
