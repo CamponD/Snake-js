@@ -22,6 +22,12 @@ export function drawGrid(ctx, cellSize, canvas) {
     }
   }
 
+/**
+ * Devuelve un número entero aleatorio entre min (inclusive) y max (exclusive).
+ * @param {number} min 
+ * @param {number} max 
+ * @returns {number}
+ */
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
