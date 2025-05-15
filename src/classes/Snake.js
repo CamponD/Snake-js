@@ -44,7 +44,7 @@ class Snake {
     }
 
     // Colisión con el propio cuerpo
-    const collision = this.body.some(segment => {
+    const collision = this.body.slice(1).some(segment => {
       return segment.x === newHead.x && segment.y === newHead.y
     })
     

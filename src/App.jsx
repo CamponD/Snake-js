@@ -8,6 +8,12 @@ import titleImg from "./assets/images/title_snake.png"
 
 function App() {
   const [ screenComponent, setScreenComponent ] = useState("menu")
+  const [ gameKey, setGameKey ] = useState(0)
+
+  const handleRestart = () => {
+    setGameKey(prev => prev + 1)    
+    setScreenComponent("game")
+  }
 
   return (
     <>
@@ -17,8 +23,8 @@ function App() {
 
       <Border>
         {screenComponent === "menu" && <Menu start={() => setScreenComponent("game")} />}
-        {screenComponent === "game" && <GameCanvas gameOver={() => setScreenComponent("death")}/>}
-        {screenComponent === "death" && <GameOver start={() => setScreenComponent("game")} />}
+        {screenComponent === "game" && <GameCanvas key={gameKey} gameOver={() => setScreenComponent("death")}/>}
+        {screenComponent === "death" && <GameOver restart={() => handleRestart()} />}
       </Border>
     </>
   )

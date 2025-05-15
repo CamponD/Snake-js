@@ -3,6 +3,7 @@ import styles from "./GameCanvas.module.css"
 
 import Snake from "../classes/Snake.js"
 import Food from "../classes/Food.js"
+import { adjustSpeed } from "../utils/canvasHelpers.js"
 
 /**
 * Componente principal que representa el juego Snake.
@@ -17,7 +18,7 @@ function GameCanvas({ gameOver }) {
   useEffect(() => {
     const canvas = canvasRef.current
     const cellSize = 20
-    const speed = 100
+    let speed = 150
     let count = 0
 
     if (!canvas.getContext) return
@@ -41,7 +42,7 @@ function GameCanvas({ gameOver }) {
     const snake = new Snake(initialBody, { width: cellSize, height: cellSize }, "#4CAF50")
 
     // Listener de teclado para controlar la dirección
-    window.addEventListener('keydown', (e) => {
+    const keyHandler = (e) => {
       const key = e.key.toLowerCase();
       if (key === "a" && !(currentDirection.x === 1 && currentDirection.y === 0))
         nextDirection = { x: -1, y: 0 }
@@ -51,7 +52,8 @@ function GameCanvas({ gameOver }) {
         nextDirection = { x: 1, y: 0 }
       if (key === "s" && !(currentDirection.x === 0 && currentDirection.y === -1))
         nextDirection = { x: 0, y: 1 }
-    })
+    }
+    window.addEventListener('keydown', keyHandler)
 
     /**
     * Bucle principal del juego.
@@ -76,6 +78,8 @@ function GameCanvas({ gameOver }) {
           foodPosition = food.setRandomPosition()
           count += 1
           console.log(count)
+    
+          speed = adjustSpeed(speed)
           snake.eatFood = false
         }
 
@@ -89,10 +93,18 @@ function GameCanvas({ gameOver }) {
       }
 
       // Lanza el bucle principal del juego
-      requestAnimationFrame(gameLoop)
+      animationId = requestAnimationFrame(gameLoop)
     }
 
+    let animationId
+
     gameLoop()
+
+    // Cleanup para desmontar GameCanvas
+    return () => {
+      window.removeEventListener("keydown", keyHandler)
+      cancelAnimationFrame(animationId)
+    }
 
   }, [gameOver])
 

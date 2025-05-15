@@ -23,6 +23,24 @@ export function drawGrid(ctx, cellSize, canvas) {
   }
 
 /**
+ * Devuelve la velocidad modificada para aumentar la dificultad.
+ * Reduce progresivamente la velocidad con un mínimo establecido.
+ *
+ * @param {number} speed - Velocidad inicial del juego (en ms).
+ * @param {number} minSpeed - Velocidad mínima permitida (en ms).
+ * @returns {number} - Nueva velocidad ajustada.
+ */
+export function adjustSpeed(speed, minSpeed = 35) {
+
+  if (speed > 90) speed -= 10
+  else if (speed > 50) speed -= 5
+  speed = Math.max(speed, 35)
+
+  return Math.max(speed, minSpeed)
+}
+      
+          
+/**
  * Devuelve un número entero aleatorio entre min (inclusive) y max (exclusive).
  * @param {number} min 
  * @param {number} max 
