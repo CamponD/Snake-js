@@ -11,15 +11,15 @@ import { adjustSpeed } from "../utils/canvasHelpers.js"
 * - Inicializa y gestiona la serpiente, la comida y el bucle del juego.
 * - Maneja la lógica de dirección mediante eventos de teclado.
 * @param {{ gameOver: () => void }} props - Función a ejecutar cuando la serpiente muere (pantalla Game Over).
+* @param {{ setScore: any }} props - Función a ejecutar cuando la serpiente come (modifica score).
 * @returns {JSX.Element}
 */
-function GameCanvas({ gameOver }) {
+function GameCanvas({ gameOver, setScore }) {
   const canvasRef = useRef(null)
   useEffect(() => {
     const canvas = canvasRef.current
     const cellSize = 20
     let speed = 150
-    let count = 0
 
     if (!canvas.getContext) return
     const ctx = canvas.getContext("2d")
@@ -76,9 +76,8 @@ function GameCanvas({ gameOver }) {
         if (snake.eatFood) {
           food = new Food(canvas, { width: cellSize, height: cellSize })
           foodPosition = food.setRandomPosition()
-          count += 1
-          console.log(count)
-    
+          setScore(prev => prev + 1)
+
           speed = adjustSpeed(speed)
           snake.eatFood = false
         }
@@ -106,15 +105,17 @@ function GameCanvas({ gameOver }) {
       cancelAnimationFrame(animationId)
     }
 
-  }, [gameOver])
+  }, [gameOver, setScore])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={styles.game}
-      width={800}
-      height={600}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className={styles.game}
+        width={800}
+        height={600}
+      />
+    </>
   )
 }
 
