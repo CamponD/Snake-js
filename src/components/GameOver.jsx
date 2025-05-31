@@ -8,10 +8,17 @@ import styles from './Menu.module.css'
  * @returns {JSX.Element}
  */
 function GameOver({ restart }) {
+    const record = localStorage.getItem("bestScore") || 0
     return (
         <div className={styles.menuContainer}>
-            <button className={styles.button} onClick={restart}>Restart</button>
+            <div className={styles.boxButton}>
+                <button className={styles.button} onClick={restart}>Restart</button>
+                <button className={styles.button} onClick={()=>{localStorage.removeItem("bestScore")}}>Claer</button>
+            </div>
+            
+            Score: {record}
         </div>
+        
     )
 }
 

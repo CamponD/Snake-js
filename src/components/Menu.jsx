@@ -10,7 +10,9 @@ import styles from './Menu.module.css'
 function Menu({ start }) {
   return (
       <div className={styles.menuContainer}>
-        <button className={styles.button} onClick={start} >Jugar</button>
+        <div className={styles.boxButton}>
+          <button className={styles.button} onClick={start} >Jugar</button>
+        </div>
       </div>
   )
 }

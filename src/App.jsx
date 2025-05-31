@@ -10,11 +10,11 @@ function App() {
   const [screenComponent, setScreenComponent] = useState("menu")
   const [gameKey, setGameKey] = useState(0)
   const [score, setScore] = useState(0)
-
-  const gameOver = useCallback(() => {
+  
+  const gameOver = useCallback(() => {  
     setScreenComponent("death")
   }, [])
-  
+
   const handleRestart = () => {
     setScore(0)
     setGameKey(prev => prev + 1)
@@ -27,13 +27,15 @@ function App() {
         <img src={titleImg} alt="Title image" />
       </header>
 
-      <div className="score-display">
-        Score: {score}
-      </div>
+      {screenComponent === "game" && (
+        <div className="score-display">
+          Score: {score}
+        </div>
+      )}
 
       <Border>
         {screenComponent === "menu" && <Menu start={() => setScreenComponent("game")} />}
-        {screenComponent === "game" && <GameCanvas key={gameKey} gameOver={gameOver} setScore={setScore} />}
+        {screenComponent === "game" && <GameCanvas key={gameKey} gameOver={gameOver} score={score} setScore={setScore} />}
         {screenComponent === "death" && <GameOver restart={() => handleRestart()} />}
       </Border>
     </>

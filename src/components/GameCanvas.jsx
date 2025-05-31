@@ -14,8 +14,10 @@ import { adjustSpeed } from "../utils/canvasHelpers.js"
 * @param {{ setScore: any }} props - Función a ejecutar cuando la serpiente come (modifica score).
 * @returns {JSX.Element}
 */
-function GameCanvas({ gameOver, setScore }) {
+function GameCanvas({ gameOver, setScore }) { 
   const canvasRef = useRef(null)
+  const scoreRef = useRef(0)
+
   useEffect(() => {
     const canvas = canvasRef.current
     const cellSize = 20
@@ -70,13 +72,20 @@ function GameCanvas({ gameOver, setScore }) {
         const isAlive = snake.update(canvas, nextDirection, foodPosition)
 
         if (!isAlive) {
+          const best = parseInt(localStorage.getItem("bestScore")) || 0
+          if (scoreRef.current > best) {
+            localStorage.setItem("bestScore", scoreRef.current)
+          }
+          console.log(scoreRef.current);
+
           gameOver()
         }
 
         if (snake.eatFood) {
           food = new Food(canvas, { width: cellSize, height: cellSize })
           foodPosition = food.setRandomPosition()
-          setScore(prev => prev + 1)
+          scoreRef.current += 1
+          setScore(scoreRef.current)
 
           speed = adjustSpeed(speed)
           snake.eatFood = false
