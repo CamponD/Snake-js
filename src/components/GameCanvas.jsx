@@ -76,7 +76,6 @@ function GameCanvas({ gameOver, setScore }) {
           if (scoreRef.current > best) {
             localStorage.setItem("bestScore", scoreRef.current)
           }
-          console.log(scoreRef.current);
 
           gameOver()
         }

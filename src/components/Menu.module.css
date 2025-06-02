@@ -7,9 +7,35 @@
     height: 100%;
 }
 
+.gameOverContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.boxScore{
+    background-image: url('../assets/images/background_score.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 47%;
+    height: 55%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    font-size: min(2vw, 2rem);
+}
+
+.boxScore p{
+    margin: 0;
+}
+
 .boxButton{
     position: absolute;
-    top: 20%;
+    top: 60%;
     left: 15%;
 
     width: 20%;

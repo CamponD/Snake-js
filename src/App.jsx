@@ -20,6 +20,11 @@ function App() {
     setGameKey(prev => prev + 1)
     setScreenComponent("game")
   }
+  
+  const backMenu = () => {
+    setScore(0)
+    setScreenComponent("menu")
+  }
 
   return (
     <>
@@ -36,7 +41,7 @@ function App() {
       <Border>
         {screenComponent === "menu" && <Menu start={() => setScreenComponent("game")} />}
         {screenComponent === "game" && <GameCanvas key={gameKey} gameOver={gameOver} score={score} setScore={setScore} />}
-        {screenComponent === "death" && <GameOver restart={() => handleRestart()} />}
+        {screenComponent === "death" && <GameOver restart={() => handleRestart()} backMenu={() => backMenu()} score={score} />}
       </Border>
     </>
   )
