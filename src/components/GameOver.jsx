@@ -29,7 +29,8 @@ function GameOver({ restart, backMenu, score }) {
 
             <div className={styles.boxButton}>
                 <button className={styles.button} onClick={restart}>Restart</button>
-                <button className={styles.button} onClick={clearRecord}>Claer</button>
+                <button className={styles.button} onClick={backMenu}>Menu</button>
+                <button className={styles.button} onClick={clearRecord}>Rid Record</button>
             </div>
         </div>
 
