@@ -4,6 +4,7 @@ import styles from "./GameCanvas.module.css"
 import Snake from "../classes/Snake.js"
 import Food from "../classes/Food.js"
 import { adjustSpeed } from "../utils/canvasHelpers.js"
+import { playSound } from "../utils/soundManager"
 
 /**
 * Componente principal que representa el juego Snake.
@@ -40,7 +41,6 @@ function GameCanvas({ gameOver, setScore }) {
     // Instanciar juego
     let food = new Food(canvas, { width: cellSize, height: cellSize })
     let foodPosition = food.setRandomPosition()
-
     const snake = new Snake(initialBody, { width: cellSize, height: cellSize }, "#4CAF50")
 
     // Listener de teclado para controlar la dirección
@@ -76,6 +76,7 @@ function GameCanvas({ gameOver, setScore }) {
           if (scoreRef.current > best) {
             localStorage.setItem("bestScore", scoreRef.current)
           }
+          playSound("/sounds/death.mp3", 0.6)
 
           gameOver()
         }
@@ -88,6 +89,7 @@ function GameCanvas({ gameOver, setScore }) {
 
           speed = adjustSpeed(speed)
           snake.eatFood = false
+          playSound("/sounds/eat.mp3", 0.6)
         }
 
         currentDirection = nextDirection

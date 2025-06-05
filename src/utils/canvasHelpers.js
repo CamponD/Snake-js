@@ -42,6 +42,7 @@ export function adjustSpeed(speed, minSpeed = 35) {
           
 /**
  * Devuelve un número entero aleatorio entre min (inclusive) y max (exclusive).
+ * 
  * @param {number} min 
  * @param {number} max 
  * @returns {number}
