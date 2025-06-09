@@ -66,21 +66,35 @@ Luego abre [http://localhost:5173](http://localhost:5173) en tu navegador.
 src/
 │
 ├── assets/             → Imágenes del juego
-├── components/         → GameCanvas, Menu, GameOver, Border...
-├── classes/            → Lógica de Snake y Food
-├── utils/              → Funciones helpers como adjustSpeed()
+├── components/         → Componentes visuales (Menu, GameCanvas, GameOver)
+├── classes/            → Lógica de juego (Snake, Food)
+├── utils/              → Funciones auxiliares (sonido, velocidad, canvas)
 ├── App.jsx             → Componente raíz y controlador de estado
 ├── main.jsx            → Entrada principal de React
 └── index.css           → CSS de App.jsx
+
+public/                 → Imágenes y sonidos accesibles desde el navegador
 ```
 
 ---
 
 ## 🧪 Próximas mejoras (planificadas)
 
-- 🧱 Obstáculos opcionales
-- 🏆 Registro de récords con `localStorage`
-- 🎵 Sonidos y efectos visuales
+
+- 🎨 Desbloqueo de skins
+  Permitir al jugador cambiar el aspecto de la serpiente o el fondo al conseguir ciertos logros o puntos.
+
+- 📈 Tabla de récords
+  Mostrar los mejores puntajes locales, o incluso conectarse a un backend para rankings globales.
+
+- 🎮 Niveles de dificultad
+  Elegir entre varios modos antes de empezar: fácil, medio, difícil, velocidad incremental…
+
+- 👤 Sistema de usuarios (requiere backend)
+  Guardar el progreso, skins desbloqueadas y estadísticas de cada jugador.
+
+- 🐍 Comportamiento aleatorio de la comida
+  Que se mueva, desaparezca con el tiempo o aparezca en patrones especiales.
 
 ---
 
